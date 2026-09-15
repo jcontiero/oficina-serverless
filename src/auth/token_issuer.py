@@ -1,6 +1,6 @@
 import datetime
 import jwt
-from src.auth.keys import get_private_key, KEY_ID
+from auth.keys import get_private_key, KEY_ID
 
 ISSUER = "oficina-auth-serverless"
 AUDIENCE = "oficina-api"

@@ -1,10 +1,10 @@
 import json
 import functions_framework
 from flask import Request, Response
-from src.auth.cpf import limpar_cpf, validar_cpf
-from src.auth.jwks import obter_jwks
-from src.auth.token_issuer import emitir_token_cliente
-from src.auth.repository import buscar_cliente_por_cpf
+from auth.cpf import limpar_cpf, validar_cpf
+from auth.jwks import obter_jwks
+from auth.token_issuer import emitir_token_cliente
+from auth.repository import buscar_cliente_por_cpf
 
 @functions_framework.http
 def auth_handler(request: Request) -> Response:
