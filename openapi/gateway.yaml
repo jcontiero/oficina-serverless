@@ -42,6 +42,15 @@ paths:
           description: "Cliente inativo"
         404:
           description: "Cliente não cadastrado"
+    options:
+      summary: "CORS Preflight"
+      operationId: "corsAuthCpf"
+      x-google-backend:
+        address: "https://${auth_function_host}/auth/cpf"
+        protocol: "h2"
+      responses:
+        204:
+          description: "CORS Allow"
 
   /.well-known/jwks.json:
     get:
