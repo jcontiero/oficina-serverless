@@ -1,0 +1,27 @@
+[project]
+name = "oficina-serverless"
+version = "0.1.0"
+description = "Cloud Functions de Autenticacao por CPF, JWKS e Notificacoes"
+requires-python = ">=3.12"
+
+dependencies = [
+    "functions-framework>=3.5.0",
+    "cryptography>=42.0.0",
+    "PyJWT[crypto]>=2.8.0",
+    "pydantic>=2.7.0",
+    "psycopg[binary]>=3.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.coverage.run]
+source = ["src"]
