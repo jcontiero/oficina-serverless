@@ -57,3 +57,14 @@ def test_handler_autenticacao_sucesso(mock_buscar):
     data = json.loads(resp.get_data())
     assert "access_token" in data
     assert data["actor_type"] == "CLIENTE"
+
+def test_handler_options_cors():
+    req = criar_mock_request(path="/auth/cpf", method="OPTIONS")
+    resp = auth_handler(req)
+    assert resp.status_code == 204
+    assert resp.headers.get("Access-Control-Allow-Origin") == "*"
+
+def test_handler_metodo_nao_permitido():
+    req = criar_mock_request(path="/auth/cpf", method="GET")
+    resp = auth_handler(req)
+    assert resp.status_code == 405
