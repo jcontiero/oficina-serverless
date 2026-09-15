@@ -54,6 +54,47 @@ resource "google_cloudfunctions2_function" "auth_function" {
   }
 }
 
+resource "google_cloudfunctions2_function" "notificacoes_function" {
+  name        = "oficina-notificacoes-function"
+  location    = var.region
+  description = "Cloud Function para envio de notificacoes"
+
+  build_config {
+    runtime     = "python312"
+    entry_point = "notificacoes_handler"
+    source {
+      storage_source {
+        bucket = google_storage_bucket.source_bucket.name
+        object = google_storage_bucket_object.source_archive.name
+      }
+    }
+  }
+
+  service_config {
+    max_instance_count             = 2
+    min_instance_count             = 0
+    available_memory               = "256M"
+    timeout_seconds                = 60
+    vpc_connector                  = "projects/${var.project_id}/locations/${var.region}/connectors/${var.vpc_connector_name}"
+    vpc_connector_egress_settings  = "PRIVATE_RANGES_ONLY"
+    all_traffic_on_latest_revision = true
+
+    secret_environment_variables {
+      key        = "DATABASE_URL"
+      project_id = var.project_id
+      secret     = var.database_url_secret_name
+      version    = "latest"
+    }
+  }
+
+  event_trigger {
+    trigger_region = var.region
+    event_type     = "google.cloud.pubsub.topic.v1.messagePublished"
+    pubsub_topic   = var.pubsub_topic_id
+    retry_policy   = "RETRY_POLICY_DO_NOT_RETRY" # Pub/Sub já faz retry
+  }
+}
+
 resource "google_cloud_run_service_iam_member" "public_invoker" {
   location = google_cloudfunctions2_function.auth_function.location
   service  = google_cloudfunctions2_function.auth_function.name
