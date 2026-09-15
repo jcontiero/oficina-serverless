@@ -1,4 +1,4 @@
-from src.auth.cpf import validar_cpf, limpar_cpf
+from auth.cpf import validar_cpf, limpar_cpf
 
 def test_limpar_cpf():
     assert limpar_cpf("123.456.789-00") == "12345678900"

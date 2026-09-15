@@ -1,4 +1,8 @@
 # Oficina Mecânica - Componentes Serverless
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=jcontiero_oficina-serverless)](https://sonarcloud.io/summary/new_code?id=jcontiero_oficina-serverless)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jcontiero_oficina-serverless&metric=coverage)](https://sonarcloud.io/summary/new_code?id=jcontiero_oficina-serverless)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jcontiero_oficina-serverless&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jcontiero_oficina-serverless)
+
 
 ## Propósito
 Abriga as Cloud Functions responsáveis por domínios desacoplados e de execução assíncrona, desonerando a API principal. Inclui a emissão/validação de Tokens JWT (Autenticação) e o consumidor do Eventarc para disparo de e-mails (Notificações de OS).
