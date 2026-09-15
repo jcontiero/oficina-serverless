@@ -1,8 +1,8 @@
 import json
 from unittest.mock import MagicMock, patch
 from flask import Request
-from src.auth.handler import auth_handler
-from src.auth.repository import ClienteDB
+from auth.handler import auth_handler
+from auth.repository import ClienteDB
 
 def criar_mock_request(path="/", method="GET", body=None):
     req = MagicMock(spec=Request)
@@ -30,14 +30,14 @@ def test_handler_cpf_invalido():
     resp = auth_handler(req)
     assert resp.status_code == 400
 
-@patch("src.auth.handler.buscar_cliente_por_cpf")
+@patch("auth.handler.buscar_cliente_por_cpf")
 def test_handler_cliente_nao_encontrado(mock_buscar):
     mock_buscar.return_value = None
     req = criar_mock_request(path="/auth/cpf", method="POST", body={"cpf": "52998224725"})
     resp = auth_handler(req)
     assert resp.status_code == 404
 
-@patch("src.auth.handler.buscar_cliente_por_cpf")
+@patch("auth.handler.buscar_cliente_por_cpf")
 def test_handler_cliente_inativo(mock_buscar):
     mock_buscar.return_value = ClienteDB(
         id="123", nome="Inativo", cpf="52998224725", email="inativo@teste.com", status="INATIVO"
@@ -46,7 +46,7 @@ def test_handler_cliente_inativo(mock_buscar):
     resp = auth_handler(req)
     assert resp.status_code == 403
 
-@patch("src.auth.handler.buscar_cliente_por_cpf")
+@patch("auth.handler.buscar_cliente_por_cpf")
 def test_handler_autenticacao_sucesso(mock_buscar):
     mock_buscar.return_value = ClienteDB(
         id="12345", nome="Ativo", cpf="52998224725", email="ativo@teste.com", status="ATIVO"

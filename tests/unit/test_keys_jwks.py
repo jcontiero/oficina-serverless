@@ -1,5 +1,5 @@
-from src.auth.keys import get_private_key, get_public_key, get_jwk
-from src.auth.jwks import obter_jwks
+from auth.keys import get_private_key, get_public_key, get_jwk
+from auth.jwks import obter_jwks
 
 def test_chaves_rsa():
     assert get_private_key() is not None

@@ -1,6 +1,6 @@
 import jwt
-from src.auth.token_issuer import emitir_token_cliente, ISSUER, AUDIENCE
-from src.auth.keys import get_public_key
+from auth.token_issuer import emitir_token_cliente, ISSUER, AUDIENCE
+from auth.keys import get_public_key
 
 def test_emitir_token_cliente():
     cliente_id = "550e8400-e29b-41d4-a716-446655440000"
