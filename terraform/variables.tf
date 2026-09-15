@@ -19,3 +19,9 @@ variable "database_url_secret_name" {
   description = "Nome da secret no Secret Manager com a URL do banco"
   default     = "database-url-prod"
 }
+
+variable "api_backend_host" {
+  type        = string
+  description = "Host interno ou IP do backend GKE"
+  default     = "api.oficina.internal"
+}

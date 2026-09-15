@@ -1,0 +1,159 @@
+swagger: "2.0"
+info:
+  title: "Oficina Mecânica API Gateway"
+  description: "Ponto de entrada único para o Sistema de Atendimento e Execução de Serviços da Oficina"
+  version: "1.0.0"
+schemes:
+  - "https"
+produces:
+  - "application/json"
+consumes:
+  - "application/json"
+
+paths:
+  # ==========================================
+  # 1. Roteamento para Cloud Function Serverless
+  # ==========================================
+  /auth/cpf:
+    post:
+      summary: "Autenticação de Cliente por CPF"
+      operationId: "autenticarClienteCpf"
+      x-google-backend:
+        address: "https://${auth_function_host}/auth/cpf"
+        protocol: "h2"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "cpf"
+            properties:
+              cpf:
+                type: "string"
+                example: "52998224725"
+      responses:
+        200:
+          description: "Token JWT assinado com sucesso"
+        400:
+          description: "CPF inválido"
+        403:
+          description: "Cliente inativo"
+        404:
+          description: "Cliente não cadastrado"
+
+  /.well-known/jwks.json:
+    get:
+      summary: "Endpoint JWKS com Chaves Públicas"
+      operationId: "obterJwks"
+      x-google-backend:
+        address: "https://${auth_function_host}/.well-known/jwks.json"
+        protocol: "h2"
+      responses:
+        200:
+          description: "Conjunto de chaves públicas RSA (RFC 7517)"
+
+  # ==========================================
+  # 2. Roteamento para API Backend no GKE
+  # ==========================================
+  /auth/login:
+    post:
+      summary: "Login de Funcionários e Administradores"
+      operationId: "loginAdmin"
+      x-google-backend:
+        address: "http://${api_backend_host}/auth/login"
+      responses:
+        200:
+          description: "Token de acesso administrativo emitido"
+
+  /ordens-de-servico:
+    post:
+      summary: "Abertura de Ordem de Serviço"
+      operationId: "abrirOrdemDeServico"
+      x-google-backend:
+        address: "http://${api_backend_host}/ordens-de-servico"
+      responses:
+        201:
+          description: "Ordem de Serviço criada"
+    get:
+      summary: "Listagem de Ordens de Serviço"
+      operationId: "listarOrdensDeServico"
+      x-google-backend:
+        address: "http://${api_backend_host}/ordens-de-servico"
+      responses:
+        200:
+          description: "Lista de Ordens de Serviço"
+
+  /ordens-de-servico/{id}:
+    get:
+      summary: "Consulta de Ordem de Serviço por ID"
+      operationId: "buscarOrdemDeServicoPorId"
+      x-google-backend:
+        address: "http://${api_backend_host}/ordens-de-servico/{id}"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Detalhes da Ordem de Serviço"
+
+  /clientes:
+    post:
+      summary: "Cadastro de Cliente"
+      operationId: "cadastrarCliente"
+      x-google-backend:
+        address: "http://${api_backend_host}/clientes"
+      responses:
+        201:
+          description: "Cliente cadastrado"
+    get:
+      summary: "Listagem de Clientes"
+      operationId: "listarClientes"
+      x-google-backend:
+        address: "http://${api_backend_host}/clientes"
+      responses:
+        200:
+          description: "Lista de clientes"
+
+  /veiculos:
+    post:
+      summary: "Cadastro de Veículo"
+      operationId: "cadastrarVeiculo"
+      x-google-backend:
+        address: "http://${api_backend_host}/veiculos"
+      responses:
+        201:
+          description: "Veículo cadastrado"
+
+  /servicos:
+    get:
+      summary: "Listagem de Serviços"
+      operationId: "listarServicos"
+      x-google-backend:
+        address: "http://${api_backend_host}/servicos"
+      responses:
+        200:
+          description: "Catálogo de serviços"
+
+  /pecas:
+    get:
+      summary: "Listagem de Peças"
+      operationId: "listarPecas"
+      x-google-backend:
+        address: "http://${api_backend_host}/pecas"
+      responses:
+        200:
+          description: "Estoque de peças"
+
+  /relatorios:
+    get:
+      summary: "Relatórios Gerenciais"
+      operationId: "obterRelatorios"
+      x-google-backend:
+        address: "http://${api_backend_host}/relatorios"
+      responses:
+        200:
+          description: "Dados consolidados"
