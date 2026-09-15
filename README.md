@@ -1,8 +1,33 @@
-# Oficina Serverless
+# Oficina Mecânica - Componentes Serverless
 
+## Propósito
+Abriga as Cloud Functions responsáveis por domínios desacoplados e de execução assíncrona, desonerando a API principal. Inclui a emissão/validação de Tokens JWT (Autenticação) e o consumidor do Eventarc para disparo de e-mails (Notificações de OS).
 
-Este repositório faz parte do ecossistema do Sistema de Oficina Mecânica.
-- [API Principal](https://github.com/jcontiero/oficina-api)
-- [Funções Serverless](https://github.com/jcontiero/oficina-serverless)
-- [Infraestrutura K8s](https://github.com/jcontiero/oficina-k8s-infra)
-- [Infraestrutura Banco de Dados](https://github.com/jcontiero/oficina-database-infra)
+## Tecnologias Utilizadas
+- **Python 3.12** com **Functions Framework**
+- **Terraform** (Infraestrutura as Code)
+- **Google Cloud Functions v2** (Cloud Run)
+- **Eventarc** & **Pub/Sub**
+- **API Gateway**
+
+## Passos para Execução e Deploy
+
+**Execução Local:**
+1. Instale o `functions-framework`.
+2. Rode o consumidor localmente: `functions-framework --target=notificacoes_handler --signature-type=cloudevent`
+
+**Deploy:**
+Realizado nativamente via Terraform no Github Actions. Qualquer merge nas branches rastreadas atualiza as funções através da diretiva `google_cloudfunctions2_function` que compacta e envia a pasta `src/` ao Google Cloud Storage.
+
+## Diagrama de Arquitetura
+
+```mermaid
+flowchart LR
+    API_GW(API Gateway) -->|/auth| F_Auth(Cloud Function - Auth)
+    Topic(Pub/Sub Topic) -->|Eventarc Trigger| F_Notif(Cloud Function - Notificações)
+    F_Notif -->|Retry| DLQ(Dead Letter Queue)
+```
+
+## APIs e Documentação
+- A autenticação é exposta externamente via API Gateway. 
+- O contrato dos end-points serverless encontra-se consolidado no **Swagger** central da `oficina-api`, não havendo página OpenAPI dedicada exclusivamente às functions assíncronas.
