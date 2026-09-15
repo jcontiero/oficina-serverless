@@ -4,9 +4,9 @@ resource "google_api_gateway_api" "api" {
 }
 
 resource "google_api_gateway_api_config" "config" {
-  provider      = google-beta
-  api           = google_api_gateway_api.api.api_id
-  api_config_id = "oficina-config-v1"
+  provider             = google-beta
+  api                  = google_api_gateway_api.api.api_id
+  api_config_id_prefix = "oficina-config-"
 
   openapi_documents {
     document {
