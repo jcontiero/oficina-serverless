@@ -35,3 +35,4 @@ flowchart LR
 ## APIs e Documentação
 - A autenticação é exposta externamente via API Gateway. 
 - O contrato dos end-points serverless encontra-se consolidado no **Swagger** central da `oficina-api`, não havendo página OpenAPI dedicada exclusivamente às functions assíncronas.
+
