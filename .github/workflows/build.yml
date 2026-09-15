@@ -32,10 +32,12 @@ jobs:
           PYTHONPATH=src pytest tests/unit --cov=src --cov-report=xml:coverage.xml --cov-fail-under=0 -q
 
       - name: Configure SonarCloud New Code period
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           curl -s -X POST \
             "https://sonarcloud.io/api/new_code_periods/set?project=jcontiero_oficina-serverless&type=NUMBER_OF_DAYS&value=365" \
-            -H "Authorization: Bearer ${{ secrets.SONAR_TOKEN }}"
+            -H "Authorization: Bearer ${SONAR_TOKEN}"
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@7006c4492b2e0ee0f816d36501671557c97f5995 # v8.1.0
