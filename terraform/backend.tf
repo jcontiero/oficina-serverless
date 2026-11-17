@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "pos-fiap-2026-tf-state"
-    prefix = "env/shared/serverless"
+    bucket = "fiap-project-514922-tfstate"
+    prefix = "services/oficina-serverless"
   }
 }
