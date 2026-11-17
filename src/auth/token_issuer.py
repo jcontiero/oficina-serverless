@@ -1,13 +1,15 @@
 import datetime
+
 import jwt
-from auth.keys import get_private_key, KEY_ID
+
+from auth.keys import KEY_ID, get_private_key
 
 ISSUER = "oficina-auth-serverless"
 AUDIENCE = "oficina-api"
 EXPIRES_IN_MINUTES = 60
 
 def emitir_token_cliente(cliente_id: str, cpf: str) -> dict:
-    agora = datetime.datetime.now(datetime.timezone.utc)
+    agora = datetime.datetime.now(datetime.UTC)
     expiracao = agora + datetime.timedelta(minutes=EXPIRES_IN_MINUTES)
 
     payload = {

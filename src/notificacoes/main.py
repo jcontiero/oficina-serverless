@@ -34,6 +34,6 @@ def notificacoes_handler(event, context):
                 
         except Exception as e:
             logger.error(f"Erro ao processar mensagem: {e}")
-            raise e
+            raise
     else:
         logger.warning("Evento sem data")

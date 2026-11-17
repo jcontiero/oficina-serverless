@@ -1,10 +1,13 @@
 import json
+
 import functions_framework
 from flask import Request, Response
+
 from auth.cpf import limpar_cpf, validar_cpf
 from auth.jwks import obter_jwks
-from auth.token_issuer import emitir_token_cliente
 from auth.repository import buscar_cliente_por_cpf
+from auth.token_issuer import emitir_token_cliente
+
 
 @functions_framework.http
 def auth_handler(request: Request) -> Response:
@@ -80,7 +83,7 @@ def auth_handler(request: Request) -> Response:
 
         except Exception as e:
             return Response(
-                json.dumps({"detail": f"Erro interno ao processar autenticação: {str(e)}"}),
+                json.dumps({"detail": f"Erro interno ao processar autenticação: {e!s}"}),
                 status=500,
                 mimetype="application/json",
                 headers=cors_headers

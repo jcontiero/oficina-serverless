@@ -1,6 +1,8 @@
 import functions_framework
+
 from auth.handler import auth_handler as auth_handler_impl
 from notificacoes.main import notificacoes_handler as notificacoes_handler_impl
+
 
 @functions_framework.http
 def auth_handler(request):

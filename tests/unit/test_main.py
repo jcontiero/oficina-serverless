@@ -1,5 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 import src.main as main_mod
+
 
 def test_main_auth_handler():
     mock_req = MagicMock()
