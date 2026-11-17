@@ -149,7 +149,7 @@ paths:
       summary: "Listagem de Serviços"
       operationId: "listarServicos"
       x-google-backend:
-        address: "http://${api_backend_host}/servicos"
+        address: "http://${execucao_backend_host}/servicos"
         disable_auth: true
       responses:
         200:
@@ -160,7 +160,7 @@ paths:
       summary: "Listagem de Peças"
       operationId: "listarPecas"
       x-google-backend:
-        address: "http://${api_backend_host}/pecas"
+        address: "http://${execucao_backend_host}/pecas"
         disable_auth: true
       responses:
         200:
@@ -247,12 +247,12 @@ paths:
         202:
           description: "Compensacao iniciada"
 
-  /v1/ordens-servico/{id}/reprocessar-estorno:
+  /v1/ordens-servico/{id}/saga/reprocessar-estorno:
     post:
       summary: "Reprocessar estorno pendente"
       operationId: "reprocessarEstornoV1"
       x-google-backend:
-        address: "http://${api_backend_host}/v1/ordens-servico/{id}/reprocessar-estorno"
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/saga/reprocessar-estorno"
         disable_auth: true
       parameters:
         - name: "id"
@@ -441,3 +441,61 @@ paths:
       responses:
         200:
           description: "Lista de servicos"
+
+  # JWT RS256 e perfil são obrigatórios no serviço de destino.
+  /v1/ordens-servico/{id}/entrega:
+    post:
+      summary: "Registrar entrega do veículo"
+      operationId: "entregarOsV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/entrega"
+        disable_auth: true
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Operação concluída"
+        401:
+          description: "JWT ausente ou inválido"
+        403:
+          description: "Perfil sem permissão"
+
+  # JWT RS256 e perfil são obrigatórios no serviço de destino.
+  /v1/execucoes:
+    get:
+      summary: "Listar execuções"
+      operationId: "listarExecucoesV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/execucoes"
+        disable_auth: true
+      responses:
+        200:
+          description: "Operação concluída"
+        401:
+          description: "JWT ausente ou inválido"
+        403:
+          description: "Perfil sem permissão"
+
+  # JWT RS256 e perfil são obrigatórios no serviço de destino.
+  /v1/execucoes/{id}:
+    get:
+      summary: "Consultar execução"
+      operationId: "consultarExecucaoV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/execucoes/{id}"
+        disable_auth: true
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Operação concluída"
+        401:
+          description: "JWT ausente ou inválido"
+        403:
+          description: "Perfil sem permissão"
