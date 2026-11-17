@@ -14,6 +14,7 @@ module "auth_function" {
   region                   = var.region
   vpc_connector_name       = var.vpc_connector_name
   database_url_secret_name = var.database_url_secret_name
+  api_backend_host         = var.api_backend_host
   pubsub_topic_id          = module.pubsub.topic_id
   env_suffix               = local.env_suffix
 }
