@@ -102,7 +102,8 @@ paths:
       summary: "Consulta de Ordem de Serviço por ID"
       operationId: "buscarOrdemDeServicoPorId"
       x-google-backend:
-        address: "https://${api_backend_host}/ordens-de-servico/{id}"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -204,7 +205,8 @@ paths:
       summary: "Consulta OS v1"
       operationId: "consultarOsV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -220,7 +222,8 @@ paths:
       summary: "Consulta estado da Saga"
       operationId: "consultarSagaV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}/saga"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -236,7 +239,8 @@ paths:
       summary: "Solicitar cancelamento da OS via Saga"
       operationId: "cancelarOsV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}/cancelar"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -252,7 +256,8 @@ paths:
       summary: "Reprocessar estorno pendente"
       operationId: "reprocessarEstornoV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}/saga/reprocessar-estorno"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -268,7 +273,8 @@ paths:
       summary: "Reabrir nova rodada apos recusa de orcamento"
       operationId: "novaRodadaOsV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}/nova-rodada"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -284,7 +290,8 @@ paths:
       summary: "Decisao do cliente sobre orcamento"
       operationId: "decisaoOrcamentoV1"
       x-google-backend:
-        address: "https://${billing_backend_host}/v1/orcamentos/{id}/decisao"
+        address: "https://${billing_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -300,7 +307,8 @@ paths:
       summary: "Consultar orcamento por OS"
       operationId: "orcamentoPorOsV1"
       x-google-backend:
-        address: "https://${billing_backend_host}/v1/orcamentos/por-os/{os_id}"
+        address: "https://${billing_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "os_id"
@@ -316,7 +324,8 @@ paths:
       summary: "Consultar pagamento por OS"
       operationId: "pagamentoPorOsV1"
       x-google-backend:
-        address: "https://${billing_backend_host}/v1/pagamentos/por-os/{os_id}"
+        address: "https://${billing_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "os_id"
@@ -343,7 +352,8 @@ paths:
       summary: "Registrar diagnostico tecnico"
       operationId: "registrarDiagnosticoV1"
       x-google-backend:
-        address: "https://${execucao_backend_host}/v1/execucoes/{id}/diagnostico"
+        address: "https://${execucao_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -359,7 +369,8 @@ paths:
       summary: "Iniciar reparo"
       operationId: "iniciarExecucaoV1"
       x-google-backend:
-        address: "https://${execucao_backend_host}/v1/execucoes/{id}/iniciar"
+        address: "https://${execucao_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -375,7 +386,8 @@ paths:
       summary: "Concluir reparo"
       operationId: "concluirExecucaoV1"
       x-google-backend:
-        address: "https://${execucao_backend_host}/v1/execucoes/{id}/concluir"
+        address: "https://${execucao_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -411,7 +423,8 @@ paths:
       summary: "Buscar peca"
       operationId: "buscarPecaV1"
       x-google-backend:
-        address: "https://${execucao_backend_host}/v1/pecas/{id}"
+        address: "https://${execucao_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -448,7 +461,8 @@ paths:
       summary: "Registrar entrega do veículo"
       operationId: "entregarOsV1"
       x-google-backend:
-        address: "https://${api_backend_host}/v1/ordens-servico/{id}/entrega"
+        address: "https://${api_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
@@ -485,7 +499,8 @@ paths:
       summary: "Consultar execução"
       operationId: "consultarExecucaoV1"
       x-google-backend:
-        address: "https://${execucao_backend_host}/v1/execucoes/{id}"
+        address: "https://${execucao_backend_host}"
+        path_translation: "APPEND_PATH_TO_ADDRESS"
         disable_auth: true
       parameters:
         - name: "id"
