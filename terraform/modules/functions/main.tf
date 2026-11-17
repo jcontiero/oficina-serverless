@@ -76,7 +76,7 @@ resource "google_cloudfunctions2_function" "auth_function" {
       JWT_ISSUER              = "oficina-auth-${var.env_canon}"
       JWT_AUDIENCE            = "oficina-backend-${var.env_canon}"
       OS_AUTH_LOOKUP_URL      = "https://${var.api_backend_host}/internal/clientes/autenticacao"
-      OS_AUTH_LOOKUP_AUDIENCE = "https://${var.api_backend_host}/internal/clientes/autenticacao"
+      OS_AUTH_LOOKUP_AUDIENCE = "https://api.oficina.internal/internal/clientes/autenticacao"
     }
 
     secret_environment_variables {
