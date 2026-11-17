@@ -1,8 +1,11 @@
 import json
 from unittest.mock import MagicMock, patch
+
 from flask import Request
+
 from auth.handler import auth_handler
 from auth.repository import ClienteDB
+
 
 def criar_mock_request(path="/", method="GET", body=None):
     req = MagicMock(spec=Request)

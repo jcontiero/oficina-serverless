@@ -1,11 +1,17 @@
 variable "project_id" {
   type    = string
-  default = "pos-fiap-2026"
+  default = "fiap-project-514922"
 }
 
 variable "region" {
   type    = string
-  default = "us-central1"
+  default = "us-east1"
+}
+
+variable "environment" {
+  type        = string
+  description = "Ambiente de deploy (prod preserva nomes legados; homolog aplica sufixo -homolog)"
+  default     = "prod"
 }
 
 variable "vpc_connector_name" {

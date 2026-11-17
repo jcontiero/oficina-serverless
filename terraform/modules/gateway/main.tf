@@ -1,6 +1,6 @@
 resource "google_api_gateway_api" "api" {
   provider = google-beta
-  api_id   = "oficina-api-gateway"
+  api_id   = "oficina-api-gateway${var.env_suffix}"
 }
 
 resource "google_api_gateway_api_config" "config" {
@@ -26,6 +26,6 @@ resource "google_api_gateway_api_config" "config" {
 resource "google_api_gateway_gateway" "gateway" {
   provider   = google-beta
   api_config = google_api_gateway_api_config.config.id
-  gateway_id = "oficina-gateway"
+  gateway_id = "oficina-gateway${var.env_suffix}"
   region     = var.region
 }

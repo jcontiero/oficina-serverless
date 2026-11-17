@@ -1,7 +1,10 @@
 import base64
 import json
+
 import pytest
+
 from notificacoes.main import notificacoes_handler
+
 
 def test_notificacoes_handler_sem_data():
     event = {}

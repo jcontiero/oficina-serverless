@@ -1,7 +1,8 @@
-import os
 import base64
-from cryptography.hazmat.primitives.asymmetric import rsa
+import os
+
 from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 
 KEY_ID = os.getenv("JWT_KEY_ID", "oficina-rsa-key-2026")
 

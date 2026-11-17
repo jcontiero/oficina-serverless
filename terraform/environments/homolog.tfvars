@@ -1,3 +1,5 @@
-project_id = "pos-fiap-2026"
-region = "us-east1"
-api_backend_host = "api-homolog.oficina.internal"
+project_id               = "fiap-project-514922"
+region                   = "us-east1"
+environment              = "homolog"
+database_url_secret_name = "database-url-homolog"
+api_backend_host         = "api-homolog.oficina.internal"

@@ -1,7 +1,8 @@
 import os
-import psycopg
 from dataclasses import dataclass
-from typing import Optional
+
+import psycopg
+
 
 @dataclass
 class ClienteDB:
@@ -11,7 +12,7 @@ class ClienteDB:
     email: str
     status: str
 
-def buscar_cliente_por_cpf(cpf: str, db_url: Optional[str] = None) -> Optional[ClienteDB]:
+def buscar_cliente_por_cpf(cpf: str, db_url: str | None = None) -> ClienteDB | None:
     url = db_url or os.getenv("DATABASE_URL")
     if not url:
         return None
@@ -22,19 +23,18 @@ def buscar_cliente_por_cpf(cpf: str, db_url: Optional[str] = None) -> Optional[C
     elif url.startswith("postgresql+pg8000://"):
         url = url.replace("postgresql+pg8000://", "postgresql://")
 
-    with psycopg.connect(url) as conn:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT id, nome, cpf, email, status FROM clientes WHERE cpf = %s LIMIT 1",
-                (cpf,)
+    with psycopg.connect(url) as conn, conn.cursor() as cur:
+        cur.execute(
+            "SELECT id, nome, cpf, email, status FROM clientes WHERE cpf = %s LIMIT 1",
+            (cpf,)
+        )
+        row = cur.fetchone()
+        if row:
+            return ClienteDB(
+                id=str(row[0]),
+                nome=str(row[1]),
+                cpf=str(row[2]),
+                email=str(row[3]),
+                status=str(row[4])
             )
-            row = cur.fetchone()
-            if row:
-                return ClienteDB(
-                    id=str(row[0]),
-                    nome=str(row[1]),
-                    cpf=str(row[2]),
-                    email=str(row[3]),
-                    status=str(row[4])
-                )
     return None
