@@ -5,7 +5,7 @@ data "archive_file" "function_zip" {
 }
 
 resource "google_storage_bucket" "source_bucket" {
-  name          = "${var.project_id}-functions-source"
+  name          = "${var.project_id}-functions-source${var.env_suffix}"
   location      = var.region
   force_destroy = true
 }
@@ -17,7 +17,7 @@ resource "google_storage_bucket_object" "source_archive" {
 }
 
 resource "google_cloudfunctions2_function" "auth_function" {
-  name        = "oficina-auth-function"
+  name        = "oficina-auth-function${var.env_suffix}"
   location    = var.region
   description = "Cloud Function para autenticacao de clientes por CPF e JWKS"
 
@@ -55,7 +55,7 @@ resource "google_cloudfunctions2_function" "auth_function" {
 }
 
 resource "google_cloudfunctions2_function" "notificacoes_function" {
-  name        = "oficina-notificacoes-function"
+  name        = "oficina-notificacoes-function${var.env_suffix}"
   location    = var.region
   description = "Cloud Function para envio de notificacoes"
 

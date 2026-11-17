@@ -1,3 +1,5 @@
-project_id = "pos-fiap-2026"
-region = "us-east1"
-api_backend_host = "api.oficina.com"
+project_id               = "pos-fiap-2026"
+region                   = "us-east1"
+environment              = "prod"
+database_url_secret_name = "database-url-prod"
+api_backend_host         = "api.oficina.com"

@@ -5,7 +5,13 @@ variable "project_id" {
 
 variable "region" {
   type    = string
-  default = "us-central1"
+  default = "us-east1"
+}
+
+variable "environment" {
+  type        = string
+  description = "Ambiente de deploy (prod preserva nomes legados; homolog aplica sufixo -homolog)"
+  default     = "prod"
 }
 
 variable "vpc_connector_name" {

@@ -1,5 +1,5 @@
 from unittest.mock import patch, MagicMock
-from auth.repository import buscar_cliente_por_cpf, ClienteDB
+from auth.repository import buscar_cliente_por_cpf
 
 def test_buscar_cliente_sem_database_url():
     with patch.dict("os.environ", {}, clear=True):

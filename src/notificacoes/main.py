@@ -1,9 +1,6 @@
 import base64
 import json
 import logging
-import smtplib
-import os
-from email.message import EmailMessage
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("notificacoes")
@@ -24,6 +21,7 @@ def notificacoes_handler(event, context):
             tipo_evento = event.get('attributes', {}).get('tipo_evento', '')
             status_novo = payload.get('status_novo')
             os_id = payload.get('os_id')
+            logger.debug(f"Tipo do evento: {tipo_evento}")
             
             # Aqui deveriamos buscar o e-mail do cliente no banco.
             # Como a função tem acesso ao BD (via VPC), podemos usar psycopg2 ou simular.

@@ -4,3 +4,7 @@ variable "api_backend_host" {
   type    = string
   default = "api.oficina.internal"
 }
+variable "env_suffix" {
+  type    = string
+  default = ""
+}
