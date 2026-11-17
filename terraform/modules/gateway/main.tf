@@ -12,8 +12,10 @@ resource "google_api_gateway_api_config" "config" {
     document {
       path = "openapi.yaml"
       contents = base64encode(templatefile("${path.root}/../openapi/gateway.yaml", {
-        auth_function_host = replace(replace(var.auth_function_uri, "https://", ""), "http://", "")
-        api_backend_host   = var.api_backend_host
+        auth_function_host    = replace(replace(var.auth_function_uri, "https://", ""), "http://", "")
+        api_backend_host      = var.api_backend_host
+        billing_backend_host  = var.billing_backend_host
+        execucao_backend_host = var.execucao_backend_host
       }))
     }
   }

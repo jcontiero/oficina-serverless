@@ -28,6 +28,18 @@ variable "database_url_secret_name" {
 
 variable "api_backend_host" {
   type        = string
-  description = "Host interno ou IP do backend GKE"
+  description = "Host interno ou IP do backend OS (oficina-api) no GKE"
   default     = "api.oficina.internal"
+}
+
+variable "billing_backend_host" {
+  type        = string
+  description = "Host interno ou IP do backend Billing (oficina-billing) no GKE"
+  default     = "billing.oficina.internal"
+}
+
+variable "execucao_backend_host" {
+  type        = string
+  description = "Host interno ou IP do backend Execucao (oficina-execucao) no GKE"
+  default     = "execucao.oficina.internal"
 }

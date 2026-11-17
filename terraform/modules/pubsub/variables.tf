@@ -8,3 +8,9 @@ variable "env_suffix" {
   type        = string
   default     = ""
 }
+
+variable "env_canon" {
+  description = "Nome canonico do ambiente (homolog ou production)"
+  type        = string
+  default     = "homolog"
+}

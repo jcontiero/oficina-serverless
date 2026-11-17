@@ -166,3 +166,249 @@ paths:
       responses:
         200:
           description: "Dados consolidados"
+
+  /.well-known/admin-jwks.json:
+    get:
+      summary: "JWKS Administrativo (oficina-api)"
+      operationId: "obterAdminJwks"
+      x-google-backend:
+        address: "http://${api_backend_host}/.well-known/admin-jwks.json"
+      responses:
+        200:
+          description: "Chaves publicas administrativas RS256"
+
+  /v1/ordens-servico:
+    post:
+      summary: "Abertura de OS v1 (Saga)"
+      operationId: "abrirOsV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico"
+      responses:
+        202:
+          description: "OS e Saga iniciadas"
+
+  /v1/ordens-servico/{id}:
+    get:
+      summary: "Consulta OS v1"
+      operationId: "consultarOsV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Detalhes da OS"
+
+  /v1/ordens-servico/{id}/saga:
+    get:
+      summary: "Consulta estado da Saga"
+      operationId: "consultarSagaV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/saga"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Estado da Saga"
+
+  /v1/ordens-servico/{id}/cancelar:
+    post:
+      summary: "Solicitar cancelamento da OS via Saga"
+      operationId: "cancelarOsV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/cancelar"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        202:
+          description: "Compensacao iniciada"
+
+  /v1/ordens-servico/{id}/reprocessar-estorno:
+    post:
+      summary: "Reprocessar estorno pendente"
+      operationId: "reprocessarEstornoV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/reprocessar-estorno"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        202:
+          description: "Reprocessamento solicitado"
+
+  /v1/ordens-servico/{id}/nova-rodada:
+    post:
+      summary: "Reabrir nova rodada apos recusa de orcamento"
+      operationId: "novaRodadaOsV1"
+      x-google-backend:
+        address: "http://${api_backend_host}/v1/ordens-servico/{id}/nova-rodada"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Nova rodada iniciada"
+
+  /v1/orcamentos/{id}/decisao:
+    post:
+      summary: "Decisao do cliente sobre orcamento"
+      operationId: "decisaoOrcamentoV1"
+      x-google-backend:
+        address: "http://${billing_backend_host}/v1/orcamentos/{id}/decisao"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        202:
+          description: "Decisao registrada"
+
+  /v1/orcamentos/por-os/{os_id}:
+    get:
+      summary: "Consultar orcamento por OS"
+      operationId: "orcamentoPorOsV1"
+      x-google-backend:
+        address: "http://${billing_backend_host}/v1/orcamentos/por-os/{os_id}"
+      parameters:
+        - name: "os_id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Orcamento"
+
+  /v1/pagamentos/por-os/{os_id}:
+    get:
+      summary: "Consultar pagamento por OS"
+      operationId: "pagamentoPorOsV1"
+      x-google-backend:
+        address: "http://${billing_backend_host}/v1/pagamentos/por-os/{os_id}"
+      parameters:
+        - name: "os_id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Pagamento"
+
+  /webhooks/mercadopago:
+    post:
+      summary: "Webhook Mercado Pago"
+      operationId: "webhookMercadoPago"
+      x-google-backend:
+        address: "http://${billing_backend_host}/webhooks/mercadopago"
+      responses:
+        200:
+          description: "Webhook processado"
+
+  /v1/execucoes/{id}/diagnostico:
+    post:
+      summary: "Registrar diagnostico tecnico"
+      operationId: "registrarDiagnosticoV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/execucoes/{id}/diagnostico"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        201:
+          description: "Diagnostico registrado"
+
+  /v1/execucoes/{id}/iniciar:
+    post:
+      summary: "Iniciar reparo"
+      operationId: "iniciarExecucaoV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/execucoes/{id}/iniciar"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Execucao iniciada"
+
+  /v1/execucoes/{id}/concluir:
+    post:
+      summary: "Concluir reparo"
+      operationId: "concluirExecucaoV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/execucoes/{id}/concluir"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Execucao concluida"
+
+  /v1/pecas:
+    post:
+      summary: "Cadastrar peca"
+      operationId: "cadastrarPecaV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/pecas"
+      responses:
+        201:
+          description: "Peca cadastrada"
+    get:
+      summary: "Listar pecas"
+      operationId: "listarPecasV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/pecas"
+      responses:
+        200:
+          description: "Lista de pecas"
+
+  /v1/pecas/{id}:
+    get:
+      summary: "Buscar peca"
+      operationId: "buscarPecaV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/pecas/{id}"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Peca"
+
+  /v1/servicos:
+    post:
+      summary: "Cadastrar servico"
+      operationId: "cadastrarServicoV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/servicos"
+      responses:
+        201:
+          description: "Servico cadastrado"
+    get:
+      summary: "Listar servicos"
+      operationId: "listarServicosV1"
+      x-google-backend:
+        address: "http://${execucao_backend_host}/v1/servicos"
+      responses:
+        200:
+          description: "Lista de servicos"

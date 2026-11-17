@@ -14,3 +14,7 @@ variable "env_suffix" {
   type    = string
   default = ""
 }
+variable "env_canon" {
+  type    = string
+  default = "homolog"
+}
