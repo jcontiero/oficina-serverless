@@ -13,8 +13,8 @@ Abriga as Cloud Functions de suporte (Autenticação de clientes por CPF com emi
 - **Backend GCS:** `gs://pos-fiap-2026-tf-state`
 - **Prefixo:** `env/shared/serverless`
 - **Workspaces isolados por ambiente:**
-  - `main` (GitHub Environment `production`, `environment = "prod"`): preserva os nomes canônicos em produção (`oficina-auth-function`, `oficina-notificacoes-function`, `oficina-notificacoes-topic`, `oficina-api-gateway`, `oficina-gateway`, bucket `pos-fiap-2026-functions-source` e segredo `database-url-prod`).
-  - `homolog` (GitHub Environment `homolog`, `environment = "homolog"`): aplica sufixo `-homolog` em todos os recursos (`oficina-auth-function-homolog`, `oficina-notificacoes-function-homolog`, `oficina-notificacoes-topic-homolog`, `oficina-api-gateway-homolog`, `oficina-gateway-homolog`, bucket `pos-fiap-2026-functions-source-homolog`) e utiliza exclusivamente o segredo `database-url-homolog`.
+  - `main` (GitHub Environment `production`, `environment = "prod"`): preserva os nomes canônicos em produção (`oficina-auth-function`, `oficina-notificacoes-function`, `oficina-notificacoes-topic`, `oficina-api-gateway`, `oficina-gateway`, bucket `${project_id}-functions-source` e segredo `database-url-prod`).
+  - `homolog` (GitHub Environment `homolog`, `environment = "homolog"`): aplica sufixo `-homolog` em todos os recursos (`oficina-auth-function-homolog`, `oficina-notificacoes-function-homolog`, `oficina-notificacoes-topic-homolog`, `oficina-api-gateway-homolog`, `oficina-gateway-homolog`, bucket `${project_id}-functions-source-homolog`) e utiliza exclusivamente o segredo `database-url-homolog`.
 
 ## Tecnologias Utilizadas
 

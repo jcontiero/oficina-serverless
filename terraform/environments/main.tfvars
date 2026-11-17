@@ -1,4 +1,4 @@
-project_id               = "pos-fiap-2026"
+project_id               = "fiap-project-514922"
 region                   = "us-east1"
 environment              = "prod"
 database_url_secret_name = "database-url-prod"
