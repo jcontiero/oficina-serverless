@@ -11,6 +11,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  checks: read
 
 concurrency:
   group: terraform-serverless-${{ github.ref_name }}
@@ -20,11 +21,25 @@ jobs:
   deploy:
     name: Deploy Serverless (${{ github.ref_name }})
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && inputs.confirm_cloud_apply == 'true' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/homolog')
-    environment: ${{ github.ref_name == 'main' && 'production' || 'homolog' }}
+    if: github.event_name == 'workflow_dispatch' && inputs.confirm_cloud_apply == 'true' && github.ref == 'refs/heads/main'
+    environment: homolog
     steps:
       - uses: actions/checkout@v4
 
+      - name: Verify approved main commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs?per_page=100" > /tmp/deploy-checks.json
+          python - <<'PYTHON'
+          import json
+          checks = json.load(open('/tmp/deploy-checks.json'))['check_runs']
+          for name in ['lint-test', 'SonarQube', 'SonarCloud Code Analysis']:
+              matches = [c for c in checks if c['name'] == name]
+              latest = max(matches, key=lambda c: c['id']) if matches else None
+              if latest is None or latest['conclusion'] != 'success':
+                  raise SystemExit(f'Check obrigatório ausente ou reprovado: {name}')
+          PYTHON
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -36,16 +51,9 @@ jobs:
         with:
           terraform_version: "1.9.0"
 
-      - name: Select canonical environment and backend
+      - name: Select homolog canonical backend
         id: target
-        env:
-          TARGET_BRANCH: ${{ github.ref_name }}
-        run: |
-          if [ "$TARGET_BRANCH" = main ]; then
-            echo "environment=production" >> "$GITHUB_OUTPUT"
-          else
-            echo "environment=homolog" >> "$GITHUB_OUTPUT"
-          fi
+        run: echo "environment=homolog" >> "$GITHUB_OUTPUT"
       - name: Terraform Init (canonical state, no extra workspace)
         working-directory: terraform
         env:
@@ -53,9 +61,7 @@ jobs:
         run: terraform init -input=false -backend-config="prefix=services/oficina-serverless/${ENV_CANON}"
       - name: Terraform Plan
         working-directory: terraform
-        env:
-          TARGET_BRANCH: ${{ github.ref_name }}
-        run: terraform plan -input=false -var-file="environments/${TARGET_BRANCH}.tfvars" -out=/tmp/serverless.tfplan
+        run: terraform plan -input=false -var-file=environments/homolog.tfvars -out=/tmp/serverless.tfplan
       - name: Terraform Apply exact saved plan
         working-directory: terraform
         run: terraform apply -input=false /tmp/serverless.tfplan
