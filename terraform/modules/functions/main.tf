@@ -42,14 +42,9 @@ resource "google_cloudfunctions2_function" "auth_function" {
     all_traffic_on_latest_revision = true
 
     environment_variables = {
-      JWT_KEY_ID = "oficina-rsa-key-2026"
-    }
-
-    secret_environment_variables {
-      key        = "DATABASE_URL"
-      project_id = var.project_id
-      secret     = var.database_url_secret_name
-      version    = "latest"
+      JWT_KEY_ID              = "oficina-rsa-key-2026"
+      OS_AUTH_LOOKUP_URL      = "https://${var.api_backend_host}/internal/clientes/autenticacao"
+      OS_AUTH_LOOKUP_AUDIENCE = "https://${var.api_backend_host}/internal/clientes/autenticacao"
     }
   }
 }
@@ -78,13 +73,6 @@ resource "google_cloudfunctions2_function" "notificacoes_function" {
     vpc_connector                  = "projects/${var.project_id}/locations/${var.region}/connectors/${var.vpc_connector_name}"
     vpc_connector_egress_settings  = "PRIVATE_RANGES_ONLY"
     all_traffic_on_latest_revision = true
-
-    secret_environment_variables {
-      key        = "DATABASE_URL"
-      project_id = var.project_id
-      secret     = var.database_url_secret_name
-      version    = "latest"
-    }
   }
 
   event_trigger {

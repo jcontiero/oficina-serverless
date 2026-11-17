@@ -5,7 +5,7 @@ from flask import Request, Response
 
 from auth.cpf import limpar_cpf, validar_cpf
 from auth.jwks import obter_jwks
-from auth.repository import buscar_cliente_por_cpf
+from auth.repository import ErroComunicacaoOsServiceError, buscar_cliente_por_cpf
 from auth.token_issuer import emitir_token_cliente
 
 
@@ -81,6 +81,13 @@ def auth_handler(request: Request) -> Response:
                 headers=cors_headers
             )
 
+        except ErroComunicacaoOsServiceError as e:
+            return Response(
+                json.dumps({"detail": f"Serviço de autenticação temporariamente indisponível: {e!s}"}),
+                status=503,
+                mimetype="application/json",
+                headers=cors_headers
+            )
         except Exception as e:
             return Response(
                 json.dumps({"detail": f"Erro interno ao processar autenticação: {e!s}"}),

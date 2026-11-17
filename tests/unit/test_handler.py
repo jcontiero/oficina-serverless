@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from flask import Request
 
 from auth.handler import auth_handler
-from auth.repository import ClienteDB
+from auth.repository import ClienteDB, ErroComunicacaoOsServiceError
 
 
 def criar_mock_request(path="/", method="GET", body=None):
@@ -71,3 +71,12 @@ def test_handler_metodo_nao_permitido():
     req = criar_mock_request(path="/auth/cpf", method="GET")
     resp = auth_handler(req)
     assert resp.status_code == 405
+
+
+@patch("auth.handler.buscar_cliente_por_cpf")
+def test_handler_erro_comunicacao_os_retorna_503(mock_buscar):
+    mock_buscar.side_effect = ErroComunicacaoOsServiceError("timeout")
+    req = criar_mock_request(path="/auth/cpf", method="POST", body={"cpf": "52998224725"})
+    resp = auth_handler(req)
+    assert resp.status_code == 503
+
