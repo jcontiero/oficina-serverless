@@ -72,6 +72,7 @@ paths:
       operationId: "loginAdmin"
       x-google-backend:
         address: "http://${api_backend_host}/auth/login"
+        disable_auth: true
       responses:
         200:
           description: "Token de acesso administrativo emitido"
@@ -82,6 +83,7 @@ paths:
       operationId: "abrirOrdemDeServico"
       x-google-backend:
         address: "http://${api_backend_host}/ordens-de-servico"
+        disable_auth: true
       responses:
         201:
           description: "Ordem de Serviço criada"
@@ -90,6 +92,7 @@ paths:
       operationId: "listarOrdensDeServico"
       x-google-backend:
         address: "http://${api_backend_host}/ordens-de-servico"
+        disable_auth: true
       responses:
         200:
           description: "Lista de Ordens de Serviço"
@@ -100,6 +103,7 @@ paths:
       operationId: "buscarOrdemDeServicoPorId"
       x-google-backend:
         address: "http://${api_backend_host}/ordens-de-servico/{id}"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -115,6 +119,7 @@ paths:
       operationId: "cadastrarCliente"
       x-google-backend:
         address: "http://${api_backend_host}/clientes"
+        disable_auth: true
       responses:
         201:
           description: "Cliente cadastrado"
@@ -123,6 +128,7 @@ paths:
       operationId: "listarClientes"
       x-google-backend:
         address: "http://${api_backend_host}/clientes"
+        disable_auth: true
       responses:
         200:
           description: "Lista de clientes"
@@ -133,6 +139,7 @@ paths:
       operationId: "cadastrarVeiculo"
       x-google-backend:
         address: "http://${api_backend_host}/veiculos"
+        disable_auth: true
       responses:
         201:
           description: "Veículo cadastrado"
@@ -143,6 +150,7 @@ paths:
       operationId: "listarServicos"
       x-google-backend:
         address: "http://${api_backend_host}/servicos"
+        disable_auth: true
       responses:
         200:
           description: "Catálogo de serviços"
@@ -153,6 +161,7 @@ paths:
       operationId: "listarPecas"
       x-google-backend:
         address: "http://${api_backend_host}/pecas"
+        disable_auth: true
       responses:
         200:
           description: "Estoque de peças"
@@ -163,6 +172,7 @@ paths:
       operationId: "obterRelatorios"
       x-google-backend:
         address: "http://${api_backend_host}/relatorios"
+        disable_auth: true
       responses:
         200:
           description: "Dados consolidados"
@@ -173,6 +183,7 @@ paths:
       operationId: "obterAdminJwks"
       x-google-backend:
         address: "http://${api_backend_host}/.well-known/admin-jwks.json"
+        disable_auth: true
       responses:
         200:
           description: "Chaves publicas administrativas RS256"
@@ -183,6 +194,7 @@ paths:
       operationId: "abrirOsV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico"
+        disable_auth: true
       responses:
         202:
           description: "OS e Saga iniciadas"
@@ -193,6 +205,7 @@ paths:
       operationId: "consultarOsV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico/{id}"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -208,6 +221,7 @@ paths:
       operationId: "consultarSagaV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico/{id}/saga"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -223,6 +237,7 @@ paths:
       operationId: "cancelarOsV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico/{id}/cancelar"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -238,6 +253,7 @@ paths:
       operationId: "reprocessarEstornoV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico/{id}/reprocessar-estorno"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -253,6 +269,7 @@ paths:
       operationId: "novaRodadaOsV1"
       x-google-backend:
         address: "http://${api_backend_host}/v1/ordens-servico/{id}/nova-rodada"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -268,6 +285,7 @@ paths:
       operationId: "decisaoOrcamentoV1"
       x-google-backend:
         address: "http://${billing_backend_host}/v1/orcamentos/{id}/decisao"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -283,6 +301,7 @@ paths:
       operationId: "orcamentoPorOsV1"
       x-google-backend:
         address: "http://${billing_backend_host}/v1/orcamentos/por-os/{os_id}"
+        disable_auth: true
       parameters:
         - name: "os_id"
           in: "path"
@@ -298,6 +317,7 @@ paths:
       operationId: "pagamentoPorOsV1"
       x-google-backend:
         address: "http://${billing_backend_host}/v1/pagamentos/por-os/{os_id}"
+        disable_auth: true
       parameters:
         - name: "os_id"
           in: "path"
@@ -313,6 +333,7 @@ paths:
       operationId: "webhookMercadoPago"
       x-google-backend:
         address: "http://${billing_backend_host}/webhooks/mercadopago"
+        disable_auth: true
       responses:
         200:
           description: "Webhook processado"
@@ -323,6 +344,7 @@ paths:
       operationId: "registrarDiagnosticoV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/execucoes/{id}/diagnostico"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -338,6 +360,7 @@ paths:
       operationId: "iniciarExecucaoV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/execucoes/{id}/iniciar"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -353,6 +376,7 @@ paths:
       operationId: "concluirExecucaoV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/execucoes/{id}/concluir"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -368,6 +392,7 @@ paths:
       operationId: "cadastrarPecaV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/pecas"
+        disable_auth: true
       responses:
         201:
           description: "Peca cadastrada"
@@ -376,6 +401,7 @@ paths:
       operationId: "listarPecasV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/pecas"
+        disable_auth: true
       responses:
         200:
           description: "Lista de pecas"
@@ -386,6 +412,7 @@ paths:
       operationId: "buscarPecaV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/pecas/{id}"
+        disable_auth: true
       parameters:
         - name: "id"
           in: "path"
@@ -401,6 +428,7 @@ paths:
       operationId: "cadastrarServicoV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/servicos"
+        disable_auth: true
       responses:
         201:
           description: "Servico cadastrado"
@@ -409,6 +437,7 @@ paths:
       operationId: "listarServicosV1"
       x-google-backend:
         address: "http://${execucao_backend_host}/v1/servicos"
+        disable_auth: true
       responses:
         200:
           description: "Lista de servicos"
